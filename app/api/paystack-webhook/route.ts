@@ -25,23 +25,37 @@ export async function POST(req: Request) {
     }
 
     const event = JSON.parse(rawBody)
-    console.log('Paystack webhook received:', event.event)
 
     if (event.event === 'charge.success') {
       const email = event.data.customer.email
       const reference = event.data.reference
+      const amount = event.data.amount / 100
 
-      const { error } = await supabase
+      console.log(`Webhook payment success for: ${email}`)
+
+      const { data: studentRecord } = await supabase
+        .from('students')
+        .select('*')
+        .eq('email', email)
+        .single()
+
+      // Update student paid status
+      await supabase
         .from('students')
         .update({ paid: true, payment_reference: reference })
         .eq('email', email)
 
-      if (error) {
-        console.error('Supabase update error:', error)
-        return NextResponse.json({ error: error.message }, { status: 500 })
-      }
-
-      console.log(`Payment updated for ${email}`)
+      // Log payment history
+      await supabase.from('payments').insert([
+        {
+          student_id: studentRecord?.id || null,
+          email: email,
+          amount: amount,
+          currency: event.data.currency,
+          status: 'success',
+          reference: reference
+        }
+      ])
     }
 
     return NextResponse.json({ received: true }, { status: 200 })
