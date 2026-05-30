@@ -1,5 +1,5 @@
 import Nav from '../components/Nav'
-
+import NewsletterForm from '../components/NewsletterForm'
 const posts = [
   { id: 'tajweed-beginners', category: 'Tajweed', title: 'Tajweed for Beginners: Where to Start', excerpt: 'Many students feel overwhelmed when they first encounter Tajweed rules. Here is a simple, practical breakdown of where every beginner should start and why getting the foundations right matters more than speed.', date: 'May 12, 2026', readTime: '5 min read' },
   { id: 'hifz-tips', category: 'Memorization', title: '7 Habits That Make Hifz Stick', excerpt: 'Memorization is not just about repetition — it is about the conditions around the repetition. These seven habits, practiced consistently, are what separate students who retain what they memorize from those who forget.', date: 'April 28, 2026', readTime: '6 min read' },
@@ -89,8 +89,8 @@ export default function Resources() {
           <p style={{ fontSize: '14px', color: 'rgba(245,237,216,0.5)', marginBottom: '1.75rem' }}>No spam. Just practical guides for Qur'anic learners and parents, a few times a month.</p>
           <div style={{ display: 'flex', gap: '10px', maxWidth: '420px', margin: '0 auto', flexWrap: 'wrap' }}>
             <input type="email" placeholder="your@email.com" style={{ flex: 1, minWidth: '200px', background: 'rgba(245,237,216,0.06)', border: '0.5px solid rgba(245,237,216,0.15)', borderRadius: '6px', padding: '11px 16px', fontSize: '14px', color: '#F5EDD8', fontFamily: "'DM Sans', sans-serif", outline: 'none' }} />
-            <button style={{ background: '#D4A93A', color: '#0F2318', padding: '11px 22px', borderRadius: '6px', fontSize: '14px', fontWeight: 500, border: 'none', cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", whiteSpace: 'nowrap' }}>Subscribe</button>
-          </div>
+            <NewsletterForm />
+             </div>
         </div>
       </div>
 

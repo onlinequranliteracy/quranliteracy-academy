@@ -1,4 +1,5 @@
 import Nav from '../components/Nav'
+import TeachForm from '../components/TeachForm'
 
 export const metadata = {
   title: 'Teach With Us',
@@ -80,28 +81,18 @@ export default function Teach() {
         </div>
 
         {/* APPLY CTA */}
-        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '32px', fontWeight: 600, color: '#F5EDD8', marginBottom: '1rem' }}>
-            Ready to apply?
-          </h2>
-          <p style={{ fontSize: '15px', color: 'rgba(245,237,216,0.55)', marginBottom: '2rem', lineHeight: 1.7 }}>
-            Send your CV and a brief introduction to us. Tell us about your qualifications, your teaching experience, and your availability.
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="mailto:onlinequranliteracy@outlook.com?subject=Teaching Application - Online Quran Literacy" style={{ background: '#D4A93A', color: '#0F2318', padding: '14px 32px', borderRadius: '4px', fontSize: '14px', fontWeight: 500, display: 'inline-block' }}>
-              Apply by email
-            </a>
-            <a href="https://wa.me/233243083957?text=Assalamu%20Alaikum%2C%20I%20would%20like%20to%20apply%20to%20teach%20with%20Online%20Quran%20Literacy." target="_blank" rel="noopener noreferrer" style={{ background: 'transparent', border: '0.5px solid rgba(245,237,216,0.2)', color: '#F5EDD8', padding: '14px 32px', borderRadius: '4px', fontSize: '14px', display: 'inline-block' }}>
-              Apply via WhatsApp
-            </a>
-          </div>
-        </div>
+<div style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '4rem' }}>
+  <TeachForm />
+</div>
       </div>
 
       <footer style={{ padding: '2rem 1.5rem', borderTop: '0.5px solid rgba(245,237,216,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginTop: '4rem' }}>
         <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '15px', color: '#D4A93A' }}>Online Quran Literacy</div>
         <div style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>© 2026 Online Quran Literacy · Ghana</div>
       </footer>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 0 4rem' }}>
+  <TeachForm />
+</div>
     </main>
   )
 }

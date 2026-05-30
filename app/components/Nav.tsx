@@ -22,6 +22,7 @@ export default function Nav() {
 <a href="/resources" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>Resources</a>
 <a href="/faq" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>FAQ</a>
 <a href="/contact" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>Contact</a>
+
       </div>
 
       <button onClick={() => setOpen(!open)} className="hamburger" aria-label="Toggle menu" style={{
@@ -49,6 +50,7 @@ export default function Nav() {
 { href: '/resources', label: 'Resources' },
 { href: '/faq', label: 'FAQ' },
 { href: '/contact', label: 'Contact' },
+{ href: '/register', label: 'Register' },
           ].map(link => (
             <a key={link.href} href={link.href} onClick={() => setOpen(false)} style={{
               fontSize: '15px', color: 'rgba(245,237,216,0.75)',

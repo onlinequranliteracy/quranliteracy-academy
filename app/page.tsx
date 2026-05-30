@@ -133,6 +133,7 @@ export default async function Home() {
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href="/booking" style={{ background: '#D4A93A', color: '#0F2318', padding: '14px 28px', borderRadius: '4px', fontWeight: 500, fontSize: '14px' }}>Book a Free Trial</a>
           <a href="/pricing" style={{ background: 'transparent', border: '0.5px solid rgba(245,237,216,0.35)', color: '#F5EDD8', padding: '14px 28px', borderRadius: '4px', fontSize: '14px' }}>View Pricing</a>
+          <a href="/register" style={{ background: 'transparent', border: '0.5px solid rgba(245,237,216,0.35)', color: '#F5EDD8', padding: '14px 28px', borderRadius: '4px', fontSize: '14px' }}>Register now</a>
         </div>
       </section>
 
