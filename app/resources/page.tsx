@@ -1,25 +1,60 @@
 import Nav from '../components/Nav'
+import { client } from '../../sanity/lib/client'
+import { postsQuery } from '../../sanity/lib/queries'
 import NewsletterForm from '../components/NewsletterForm'
-const posts = [
-  { id: 'tajweed-beginners', category: 'Tajweed', title: 'Tajweed for Beginners: Where to Start', excerpt: 'Many students feel overwhelmed when they first encounter Tajweed rules. Here is a simple, practical breakdown of where every beginner should start and why getting the foundations right matters more than speed.', date: 'May 12, 2026', readTime: '5 min read' },
-  { id: 'hifz-tips', category: 'Memorization', title: '7 Habits That Make Hifz Stick', excerpt: 'Memorization is not just about repetition — it is about the conditions around the repetition. These seven habits, practiced consistently, are what separate students who retain what they memorize from those who forget.', date: 'April 28, 2026', readTime: '6 min read' },
-  { id: 'children-quran', category: 'Parenting', title: "The Right Age to Start Your Child on Qur'an", excerpt: 'Parents often ask: when is the right time? The answer is nuanced — it depends less on age and more on readiness. Here is what to look for and how to make the first experience a positive one.', date: 'April 10, 2026', readTime: '4 min read' },
-  { id: 'special-needs-quran', category: 'Special Needs', title: "Teaching Qur'an to Children With Learning Differences", excerpt: 'Children with autism, ADHD, or speech delays can absolutely learn the Qur\'an — they just need a different approach. This post outlines the principles our teachers use to make every session productive and joyful.', date: 'March 22, 2026', readTime: '7 min read' },
-  { id: 'morning-adhkar', category: "Du'a & Dhikr", title: 'Building a Morning Adhkar Habit From Scratch', excerpt: 'The morning adhkar are among the most rewarding Sunnah practices — yet most Muslims have never made them a daily habit. Here is a simple system for memorizing and actually maintaining them.', date: 'March 5, 2026', readTime: '5 min read' },
-  { id: 'online-quran-tips', category: 'Learning Tips', title: "How to Get the Most Out of Online Qur'an Sessions", excerpt: 'Online learning works brilliantly when the student is set up for success. These practical tips — environment, tools, mindset — will help you or your child get maximum benefit from every session.', date: 'February 18, 2026', readTime: '4 min read' },
-]
 
-const categories = ['All', 'Tajweed', 'Memorization', 'Parenting', 'Special Needs', "Du'a & Dhikr", 'Learning Tips']
+export const metadata = {
+  title: 'Resources',
+  description: "Practical guides, tips, and articles for Qur'anic learners, parents, and anyone on an Islamic education journey.",
+}
+
+interface Post {
+  _id: string
+  title: string
+  slug: { current: string }
+  category: string
+  excerpt: string
+  publishedAt: string
+  readTime: string
+}
 
 const categoryColors: Record<string, string> = {
   'Tajweed': '#2D8CFF', 'Memorization': '#D4A93A', 'Parenting': '#25D366',
   'Special Needs': '#E07BB5', "Du'a & Dhikr": '#A78BFA', 'Learning Tips': '#F97316',
 }
-export const metadata = {
-  title: 'Resources',
-  description: 'Practical guides, tips, and articles for Qur\'anic learners, parents, and anyone on an Islamic education journey.',
+
+const categories = ['All', 'Tajweed', 'Memorization', 'Parenting', 'Special Needs', "Du'a & Dhikr", 'Learning Tips']
+
+const fallbackPosts = [
+  { _id: '1', title: 'Tajweed for Beginners: Where to Start', slug: { current: 'tajweed-beginners' }, category: 'Tajweed', excerpt: 'Many students feel overwhelmed when they first encounter Tajweed rules. Here is a simple, practical breakdown of where every beginner should start.', publishedAt: '2026-05-12', readTime: '5 min read' },
+  { _id: '2', title: '7 Habits That Make Hifz Stick', slug: { current: 'hifz-tips' }, category: 'Memorization', excerpt: 'Memorization is not just about repetition — it is about the conditions around the repetition. These seven habits are what separate students who retain from those who forget.', publishedAt: '2026-04-28', readTime: '6 min read' },
+  { _id: '3', title: "The Right Age to Start Your Child on Qur'an", slug: { current: 'children-quran' }, category: 'Parenting', excerpt: 'Parents often ask: when is the right time? The answer depends less on age and more on readiness.', publishedAt: '2026-04-10', readTime: '4 min read' },
+  { _id: '4', title: "Teaching Qur'an to Children With Learning Differences", slug: { current: 'special-needs-quran' }, category: 'Special Needs', excerpt: "Children with autism, ADHD, or speech delays can absolutely learn the Qur'an — they just need a different approach.", publishedAt: '2026-03-22', readTime: '7 min read' },
+  { _id: '5', title: 'Building a Morning Adhkar Habit From Scratch', slug: { current: 'morning-adhkar' }, category: "Du'a & Dhikr", excerpt: 'The morning adhkar are among the most rewarding Sunnah practices — yet most Muslims have never made them a daily habit.', publishedAt: '2026-03-05', readTime: '5 min read' },
+  { _id: '6', title: "How to Get the Most Out of Online Qur'an Sessions", slug: { current: 'online-quran-tips' }, category: 'Learning Tips', excerpt: 'Online learning works brilliantly when the student is set up for success. These practical tips will help you get maximum benefit.', publishedAt: '2026-02-18', readTime: '4 min read' },
+]
+
+function formatDate(dateStr: string) {
+  if (!dateStr) return ''
+  try {
+    return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+  } catch {
+    return dateStr
+  }
 }
-export default function Resources() {
+
+export default async function Resources() {
+  let posts: Post[] = []
+  try {
+    posts = await client.fetch(postsQuery)
+  } catch {
+    posts = []
+  }
+
+  const displayPosts = posts.length > 0 ? posts : fallbackPosts
+  const featured = displayPosts[0]
+  const rest = displayPosts.slice(1)
+
   return (
     <main style={{ minHeight: '100vh' }}>
       <Nav />
@@ -44,41 +79,44 @@ export default function Resources() {
 
         {/* FEATURED */}
         <div style={{ maxWidth: '1100px', margin: '0 auto 2rem' }}>
-          <div style={{ background: 'rgba(212,169,58,0.06)', border: '0.5px solid rgba(212,169,58,0.2)', borderRadius: '14px', padding: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem', alignItems: 'center' }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
-                <span style={{ background: 'rgba(212,169,58,0.15)', color: '#D4A93A', fontSize: '11px', padding: '3px 10px', borderRadius: '20px' }}>Featured</span>
-                <span style={{ background: `${categoryColors[posts[0].category]}22`, color: categoryColors[posts[0].category], fontSize: '11px', padding: '3px 10px', borderRadius: '20px' }}>{posts[0].category}</span>
+          <a href={`/resources/${featured.slug?.current}`} style={{ textDecoration: 'none', display: 'block' }}>
+            <div style={{ background: 'rgba(212,169,58,0.06)', border: '0.5px solid rgba(212,169,58,0.2)', borderRadius: '14px', padding: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem', alignItems: 'center' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
+                  <span style={{ background: 'rgba(212,169,58,0.15)', color: '#D4A93A', fontSize: '11px', padding: '3px 10px', borderRadius: '20px' }}>Featured</span>
+                  <span style={{ background: `${categoryColors[featured.category] || '#D4A93A'}22`, color: categoryColors[featured.category] || '#D4A93A', fontSize: '11px', padding: '3px 10px', borderRadius: '20px' }}>{featured.category}</span>
+                </div>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 600, color: '#F5EDD8', marginBottom: '1rem', lineHeight: 1.2 }}>{featured.title}</h2>
+                <p style={{ fontSize: '14px', color: 'rgba(245,237,216,0.6)', lineHeight: 1.7, marginBottom: '1.5rem' }}>{featured.excerpt}</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>{formatDate(featured.publishedAt)}</span>
+                  <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>· {featured.readTime}</span>
+                </div>
               </div>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 600, color: '#F5EDD8', marginBottom: '1rem', lineHeight: 1.2 }}>{posts[0].title}</h2>
-              <p style={{ fontSize: '14px', color: 'rgba(245,237,216,0.6)', lineHeight: 1.7, marginBottom: '1.5rem' }}>{posts[0].excerpt}</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>{posts[0].date}</span>
-                <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>·</span>
-                <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>{posts[0].readTime}</span>
-              </div>
+              <div style={{ background: 'rgba(245,237,216,0.04)', border: '0.5px solid rgba(245,237,216,0.08)', borderRadius: '10px', height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '56px' }}>📖</div>
             </div>
-            <div style={{ background: 'rgba(245,237,216,0.04)', border: '0.5px solid rgba(245,237,216,0.08)', borderRadius: '10px', height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '56px' }}>📖</div>
-          </div>
+          </a>
         </div>
 
         {/* GRID */}
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-          {posts.slice(1).map(post => (
-            <div key={post.id} style={{ background: 'rgba(245,237,216,0.03)', border: '0.5px solid rgba(245,237,216,0.1)', borderRadius: '12px', padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem', cursor: 'pointer' }}>
-              <div>
-                <span style={{ background: `${categoryColors[post.category]}22`, color: categoryColors[post.category], fontSize: '11px', padding: '3px 10px', borderRadius: '20px' }}>{post.category}</span>
-              </div>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '20px', fontWeight: 600, color: '#F5EDD8', lineHeight: 1.3 }}>{post.title}</h3>
-              <p style={{ fontSize: '13px', color: 'rgba(245,237,216,0.55)', lineHeight: 1.7, flex: 1 }}>{post.excerpt}</p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.75rem', borderTop: '0.5px solid rgba(245,237,216,0.07)' }}>
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.3)' }}>{post.date}</span>
-                  <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.3)' }}>{post.readTime}</span>
+          {rest.map(post => (
+            <a key={post._id} href={`/resources/${post.slug?.current}`} style={{ textDecoration: 'none' }}>
+              <div style={{ background: 'rgba(245,237,216,0.03)', border: '0.5px solid rgba(245,237,216,0.1)', borderRadius: '12px', padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem', cursor: 'pointer', height: '100%' }}>
+                <div>
+                  <span style={{ background: `${categoryColors[post.category] || '#D4A93A'}22`, color: categoryColors[post.category] || '#D4A93A', fontSize: '11px', padding: '3px 10px', borderRadius: '20px' }}>{post.category}</span>
                 </div>
-                <span style={{ fontSize: '13px', color: '#D4A93A' }}>Read →</span>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '20px', fontWeight: 600, color: '#F5EDD8', lineHeight: 1.3 }}>{post.title}</h3>
+                <p style={{ fontSize: '13px', color: 'rgba(245,237,216,0.55)', lineHeight: 1.7, flex: 1 }}>{post.excerpt}</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.75rem', borderTop: '0.5px solid rgba(245,237,216,0.07)' }}>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.3)' }}>{formatDate(post.publishedAt)}</span>
+                    <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.3)' }}>{post.readTime}</span>
+                  </div>
+                  <span style={{ fontSize: '13px', color: '#D4A93A' }}>Read →</span>
+                </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 
@@ -87,10 +125,7 @@ export default function Resources() {
           <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '0.75rem' }}>Stay updated</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 600, color: '#F5EDD8', marginBottom: '0.75rem' }}>Get new articles in your inbox</h2>
           <p style={{ fontSize: '14px', color: 'rgba(245,237,216,0.5)', marginBottom: '1.75rem' }}>No spam. Just practical guides for Qur'anic learners and parents, a few times a month.</p>
-          <div style={{ display: 'flex', gap: '10px', maxWidth: '420px', margin: '0 auto', flexWrap: 'wrap' }}>
-            <input type="email" placeholder="your@email.com" style={{ flex: 1, minWidth: '200px', background: 'rgba(245,237,216,0.06)', border: '0.5px solid rgba(245,237,216,0.15)', borderRadius: '6px', padding: '11px 16px', fontSize: '14px', color: '#F5EDD8', fontFamily: "'DM Sans', sans-serif", outline: 'none' }} />
-            <NewsletterForm />
-             </div>
+          <NewsletterForm />
         </div>
       </div>
 

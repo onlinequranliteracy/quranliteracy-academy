@@ -32,3 +32,15 @@ export const postsQuery = groq`
     readTime
   }
 `
+export const postBySlugQuery = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    category,
+    excerpt,
+    body,
+    publishedAt,
+    readTime
+  }
+`
