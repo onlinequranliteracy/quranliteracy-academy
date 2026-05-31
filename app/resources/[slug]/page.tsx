@@ -1,7 +1,7 @@
-import Nav from '../components/Nav'
-import { client } from '../../sanity/lib/client'
-import { postsQuery } from '../../sanity/lib/queries'
-import NewsletterForm from '../components/NewsletterForm'
+import Nav from '../../components/Nav'
+import { client } from '../../../sanity/lib/client'
+import { postsQuery } from '../../../sanity/lib/queries'
+import NewsletterForm from '../../components/NewsletterForm'
 
 export const metadata = {
   title: 'Resources',
