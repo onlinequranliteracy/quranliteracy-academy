@@ -1,7 +1,8 @@
 import { groq } from 'next-sanity'
 
+// sanity/lib/queries.ts
 export const testimonialsQuery = groq`
-  *[_type == "testimonial"] {
+  *[_type == "testimonial"] | order(_updatedAt desc) [0...6] {
     _id,
     quote,
     name,

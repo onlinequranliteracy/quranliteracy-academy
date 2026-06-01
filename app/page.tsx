@@ -25,10 +25,7 @@ export default async function Home() {
       <Nav />
 
       {/* HERO */}
-      <section style={{
-        padding: '5rem 1.5rem 4rem',
-        maxWidth: '1200px', margin: '0 auto'
-      }}>
+      <section style={{ padding: '5rem 1.5rem 4rem', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', alignItems: 'center' }}>
           <div>
             <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '1.25rem' }}>
@@ -46,16 +43,15 @@ export default async function Home() {
             </div>
           </div>
 
+          {/* STATS CARD — updated */}
           <div style={{ background: 'rgba(245,237,216,0.05)', border: '0.5px solid rgba(245,237,216,0.1)', borderRadius: '12px', padding: '2rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
               {[
-  { num: '45+', label: 'Students taught' },
-  { num: '3', label: 'Countries served' },
-  { num: '5', label: 'Years of excellence' },
-  { num: '2', label: 'Certified tutors' },
-].map((s) => (
+                { num: '45+', label: 'Students taught' },
+                { num: '🌍', label: 'International reach', isEmoji: true },
+              ].map((s) => (
                 <div key={s.label} style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '36px', fontWeight: 600, color: '#D4A93A', lineHeight: 1 }}>{s.num}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: s.isEmoji ? '40px' : '36px', fontWeight: 600, color: '#D4A93A', lineHeight: 1 }}>{s.num}</div>
                   <div style={{ fontSize: '12px', color: 'rgba(245,237,216,0.55)', marginTop: '4px' }}>{s.label}</div>
                 </div>
               ))}
@@ -101,6 +97,63 @@ export default async function Home() {
                 <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', fontWeight: 600, color: '#F5EDD8', marginBottom: '0.5rem' }}>{p.name}</div>
                 <div style={{ fontSize: '13px', color: 'rgba(245,237,216,0.55)', lineHeight: 1.6 }}>{p.desc}</div>
               </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DIVIDER */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0 1.5rem', opacity: 0.2 }}>
+        <div style={{ flex: 1, height: '0.5px', background: '#F5EDD8' }}></div>
+        <div style={{ fontSize: '18px', color: '#D4A93A', opacity: 1 }}>✦</div>
+        <div style={{ flex: 1, height: '0.5px', background: '#F5EDD8' }}></div>
+      </div>
+
+      {/* WHY CHOOSE US — new section to fill page */}
+      <section style={{ padding: '4rem 1.5rem' }}>
+        <div className="section-max">
+          <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '0.75rem' }}>Why Online Quran Literacy</p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 600, color: '#F5EDD8', marginBottom: '3rem', lineHeight: 1.2 }}>
+            Learning that fits your life
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem' }}>
+            {[
+              { icon: '🕐', title: 'Flexible Scheduling', desc: 'Sessions available 7 days a week, morning to evening, around your timezone and routine.' },
+              { icon: '👤', title: 'One-on-One Attention', desc: 'Every student gets dedicated time with a teacher — no classes, no distractions.' },
+              { icon: '📜', title: 'Certified Teachers', desc: 'Our tutors hold Ijazah and are trained in teaching both children and adults.' },
+              { icon: '🌐', title: 'Learn From Anywhere', desc: 'All you need is a phone or laptop. We teach via WhatsApp and Zoom worldwide.' },
+            ].map((f) => (
+              <div key={f.title} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ fontSize: '22px', marginTop: '2px', flexShrink: 0 }}>{f.icon}</div>
+                <div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '17px', fontWeight: 600, color: '#F5EDD8', marginBottom: '0.4rem' }}>{f.title}</div>
+                  <div style={{ fontSize: '13px', color: 'rgba(245,237,216,0.55)', lineHeight: 1.6 }}>{f.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS — new section */}
+      <section style={{ padding: '4rem 1.5rem', background: 'rgba(212,169,58,0.04)', borderTop: '0.5px solid rgba(212,169,58,0.1)', borderBottom: '0.5px solid rgba(212,169,58,0.1)' }}>
+        <div className="section-max">
+          <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '0.75rem' }}>Getting started</p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 600, color: '#F5EDD8', marginBottom: '3rem', lineHeight: 1.2 }}>
+            Simple steps to begin
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
+            {[
+              { step: '01', title: 'Book a free trial', desc: 'Choose a time that works for you and meet your teacher with no obligation.' },
+              { step: '02', title: 'Get assessed', desc: 'Your teacher will understand your level and set a personalized learning plan.' },
+              { step: '03', title: 'Start learning', desc: 'Begin consistent, focused sessions via WhatsApp or Zoom at your own pace.' },
+              { step: '04', title: 'Track progress', desc: 'Regular check-ins, revision reviews, and certificates as you hit milestones.' },
+            ].map((s) => (
+              <div key={s.step}>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '42px', fontWeight: 600, color: 'rgba(212,169,58,0.25)', lineHeight: 1, marginBottom: '0.75rem' }}>{s.step}</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '17px', fontWeight: 600, color: '#F5EDD8', marginBottom: '0.4rem' }}>{s.title}</div>
+                <div style={{ fontSize: '13px', color: 'rgba(245,237,216,0.55)', lineHeight: 1.6 }}>{s.desc}</div>
+              </div>
             ))}
           </div>
         </div>
