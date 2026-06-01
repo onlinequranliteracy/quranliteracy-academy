@@ -7,7 +7,7 @@ const programs = [
     color: 'rgba(212,169,58,0.08)',
     description: "Our Hifz program is built around your pace. Whether your child is just starting or you're an adult returning to memorization, every session is one-on-one with a certified teacher who tracks your progress, reviews previous lessons, and adjusts the plan as you grow.",
     highlights: ['Personalized memorization plan from day one', 'Regular revision sessions to lock in retention', 'Progress reports shared with parents', 'Suitable for all ages and starting levels', 'Flexible scheduling across all timezones'],
-    forWho: 'Children aged 5 and up, adult learners, students returning to Hifz after a break.',
+    forWho: 'Children aged 5 and above, adult learners, students returning to Hifz after a break.',
     duration: '30 minutes per session', platform: 'WhatsApp or Zoom',
   },
   {
