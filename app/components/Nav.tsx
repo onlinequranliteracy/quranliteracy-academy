@@ -16,13 +16,13 @@ export default function Nav() {
       </a>
 
       <div className="desktop-nav" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-        <a href="/about" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>About</a>
+       <a href="/about" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>About</a>
 <a href="/programs" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>Programs</a>
 <a href="/pricing" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>Pricing</a>
 <a href="/resources" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>Resources</a>
 <a href="/faq" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>FAQ</a>
 <a href="/contact" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>Contact</a>
-
+<a href="/register" style={{ fontSize: '13px', color: 'rgba(245,237,216,0.65)' }}>Register</a>
       </div>
 
       <button onClick={() => setOpen(!open)} className="hamburger" aria-label="Toggle menu" style={{
