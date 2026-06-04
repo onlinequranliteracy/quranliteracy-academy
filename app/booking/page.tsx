@@ -34,7 +34,7 @@ export default function Booking() {
   const btnPrimary: React.CSSProperties = {
     background: '#D4A93A', color: '#0F2318', padding: '11px 28px', borderRadius: '4px',
     fontSize: '14px', fontWeight: 500, border: 'none', cursor: 'pointer',
-    fontFamily: "'DM Sans', sans-serif", marginLeft: 'auto', display: 'block'
+    fontFamily: "'DM Sans', sans-serif", display: 'inline-block'
   }
 
   const btnGhost: React.CSSProperties = {
@@ -58,10 +58,45 @@ export default function Booking() {
     border: step >= n ? '0.5px solid #D4A93A' : '0.5px solid rgba(245,237,216,0.2)',
   })
 
+  function handleConfirm() {
+    const programName = programs.find(p => p.id === selected.program)?.name || selected.program
+    const slotTime = slots[selected.slot]?.time || ''
+    const msg = encodeURIComponent(
+      `As-salamu alaykum! I'd like to book a free trial lesson.\n\n` +
+      `Name: ${selected.name}\n` +
+      `Program: ${programName}\n` +
+      `Preferred time: Tomorrow · ${slotTime} (${selected.timezone || 'GMT'})\n` +
+      `Age: ${selected.age || 'Not specified'}\n` +
+      `Email: ${selected.email}`
+    )
+    window.open(`https://wa.me/233243083957?text=${msg}`, '_blank')
+    setStep(5)
+  }
+
   return (
     <main style={{ minHeight: '100vh' }}>
       <Nav />
       <div style={{ padding: '3rem 1.5rem' }}>
+
+        {/* WHATSAPP SHORTCUT BANNER */}
+        <div style={{ maxWidth: '600px', margin: '0 auto 2rem', background: 'rgba(37,211,102,0.08)', border: '0.5px solid rgba(37,211,102,0.25)', borderRadius: '10px', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 500, color: '#F5EDD8', marginBottom: '2px' }}>Prefer to message us directly?</div>
+            <div style={{ fontSize: '12px', color: 'rgba(245,237,216,0.5)' }}>Skip the form — tap to chat on WhatsApp and we'll book your trial together.</div>
+          </div>
+          <div
+            onClick={() => window.open('https://wa.me/233243083957?text=' + encodeURIComponent("As-salamu alaykum! I'd like to book a free trial lesson. Could you help me get started?"), '_blank')}
+            style={{ background: '#25D366', color: 'white', padding: '9px 18px', borderRadius: '4px', fontSize: '13px', fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}
+          >
+            Chat on WhatsApp →
+          </div>
+        </div>
+
+        {/* URGENCY NOTE */}
+        <div style={{ maxWidth: '600px', margin: '0 auto 2rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#D4A93A', flexShrink: 0 }} />
+          <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.45)' }}>Limited trial slots available this week — a few spots remaining</span>
+        </div>
 
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
           <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '0.5rem' }}>No commitment required</p>
@@ -133,7 +168,7 @@ export default function Booking() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <button style={btnGhost} onClick={() => setStep(1)}>← Back</button>
-              <button style={{ ...btnPrimary, display: 'inline-block', opacity: selected.name && selected.email ? 1 : 0.4 }} onClick={() => selected.name && selected.email && setStep(3)}>Next →</button>
+              <button style={{ ...btnPrimary, opacity: selected.name && selected.email ? 1 : 0.4 }} onClick={() => selected.name && selected.email && setStep(3)}>Next →</button>
             </div>
           </div>
         )}
@@ -156,7 +191,7 @@ export default function Booking() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <button style={btnGhost} onClick={() => setStep(2)}>← Back</button>
-              <button style={{ ...btnPrimary, display: 'inline-block', opacity: selected.slot >= 0 ? 1 : 0.4 }} onClick={() => selected.slot >= 0 && setStep(4)}>Next →</button>
+              <button style={{ ...btnPrimary, opacity: selected.slot >= 0 ? 1 : 0.4 }} onClick={() => selected.slot >= 0 && setStep(4)}>Next →</button>
             </div>
           </div>
         )}
@@ -169,6 +204,7 @@ export default function Booking() {
               { key: 'Program', val: programs.find(p => p.id === selected.program)?.name || '' },
               { key: 'Student', val: selected.name },
               { key: 'Contact', val: selected.email },
+              { key: 'WhatsApp', val: selected.phone || 'Not provided' },
               { key: 'Time', val: `Tomorrow · ${slots[selected.slot]?.time}` },
               { key: 'Session', val: '30 min · via WhatsApp or Zoom' },
             ].map(r => (
@@ -181,14 +217,17 @@ export default function Booking() {
               <span style={{ fontSize: '13px', color: 'rgba(245,237,216,0.45)' }}>Cost</span>
               <span style={{ background: 'rgba(212,169,58,0.15)', color: '#D4A93A', fontSize: '11px', padding: '3px 10px', borderRadius: '20px' }}>FREE TRIAL</span>
             </div>
+            <p style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)', marginTop: '1rem', lineHeight: 1.6 }}>
+              Clicking "Confirm booking" will open WhatsApp with your details pre-filled so our teacher can confirm your slot directly.
+            </p>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1.5rem' }}>
               <button style={btnGhost} onClick={() => setStep(3)}>← Back</button>
-              <button style={{ ...btnPrimary, display: 'inline-block' }} onClick={() => setStep(5)}>Confirm booking</button>
+              <button style={{ ...btnPrimary }} onClick={handleConfirm}>Confirm booking →</button>
             </div>
           </div>
         )}
 
-        {/* STEP 5 */}
+        {/* STEP 5 — SUCCESS */}
         {step === 5 && (
           <div style={{ ...card, textAlign: 'center', padding: '3rem 2rem' }}>
             <div style={{ fontSize: '48px', marginBottom: '1rem' }}>✅</div>
@@ -196,15 +235,27 @@ export default function Booking() {
               You're booked, {selected.name.split(' ')[0]}!
             </h2>
             <p style={{ fontSize: '14px', color: 'rgba(245,237,216,0.55)', lineHeight: 1.7, marginBottom: '0.75rem' }}>
-              Your free trial lesson is confirmed. A teacher will reach out on WhatsApp with the Zoom link before your session.
+              Your WhatsApp should have opened with your booking details. Our teacher will confirm your slot and send the session link.
             </p>
-            <p style={{ fontSize: '13px', color: 'rgba(245,237,216,0.35)' }}>A confirmation has been sent to {selected.email}</p>
-            <a href="/" style={{ display: 'inline-block', marginTop: '2rem', background: '#D4A93A', color: '#0F2318', padding: '12px 28px', borderRadius: '4px', fontSize: '14px', fontWeight: 500 }}>
+            <p style={{ fontSize: '13px', color: 'rgba(245,237,216,0.35)', marginBottom: '1.5rem' }}>
+              Didn't open? <span onClick={() => window.open('https://wa.me/233243083957', '_blank')} style={{ color: '#25D366', cursor: 'pointer', borderBottom: '0.5px solid rgba(37,211,102,0.4)' }}>Tap here to open WhatsApp directly.</span>
+            </p>
+            <a href="/" style={{ display: 'inline-block', background: '#D4A93A', color: '#0F2318', padding: '12px 28px', borderRadius: '4px', fontSize: '14px', fontWeight: 500 }}>
               Back to home
             </a>
           </div>
         )}
       </div>
+
+      <footer style={{ padding: '2rem 1.5rem', borderTop: '0.5px solid rgba(245,237,216,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginTop: '4rem' }}>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '15px', color: '#D4A93A' }}>Online Quran Literacy</div>
+        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          <a href="https://instagram.com/onlinequranliteracy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>Instagram</a>
+          <a href="https://facebook.com/onlinequranliteracy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>Facebook</a>
+          <a href="https://tiktok.com/@onlinequranliteracy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>TikTok</a>
+        </div>
+        <div style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>© 2026 Online Quran Literacy · Ghana</div>
+      </footer>
     </main>
   )
 }
