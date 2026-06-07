@@ -7,7 +7,7 @@ const plans = [
     id: 'starter',
     name: 'Starter',
     desc: "Perfect for beginners or those exploring Qur'anic education",
-    monthly: 45, yearly: 40,
+    monthly: 30, yearly: 25,
     sessions: '4 sessions / month',
     featured: false,
     features: [
@@ -23,7 +23,7 @@ const plans = [
     id: 'growth',
     name: 'Growth',
     desc: 'Ideal for students who want steady, consistent weekly progress',
-    monthly: 80, yearly: 75,
+    monthly: 60, yearly: 50,
     sessions: '8 sessions / month',
     featured: true,
     features: [
@@ -39,7 +39,7 @@ const plans = [
     id: 'family',
     name: 'Family',
     desc: 'For households with multiple students or intensive learning goals',
-    monthly: 200, yearly: 180,
+    monthly: 120, yearly: 100,
     sessions: 'Unlimited sessions',
     featured: false,
     features: [
