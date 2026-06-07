@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Nav from '../components/Nav'
+import Footer from '../components/Footer'
 
 const programs = [
   { id: 'hifz', icon: '📖', name: "Qur'an Memorization", tag: 'Hifz · All ages' },
@@ -247,15 +248,7 @@ export default function Booking() {
         )}
       </div>
 
-      <footer style={{ padding: '2rem 1.5rem', borderTop: '0.5px solid rgba(245,237,216,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginTop: '4rem' }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '15px', color: '#D4A93A' }}>Online Quran Literacy</div>
-        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          <a href="https://instagram.com/onlinequranliteracy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>Instagram</a>
-          <a href="https://facebook.com/onlinequranliteracy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>Facebook</a>
-          <a href="https://tiktok.com/@onlinequranliteracy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>TikTok</a>
-        </div>
-        <div style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>© 2026 Online Quran Literacy · Ghana</div>
-      </footer>
+      <Footer />
     </main>
   )
 }

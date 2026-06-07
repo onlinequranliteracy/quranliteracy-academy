@@ -1,6 +1,8 @@
 import Nav from './components/Nav'
 import { client } from '../sanity/lib/client'
 import { testimonialsQuery } from '../sanity/lib/queries'
+import QuranSection from './components/QuranSection'
+import Footer from './components/Footer'
 
 interface Testimonial {
   _id: string
@@ -25,45 +27,65 @@ export default async function Home() {
       <Nav />
 
       {/* HERO */}
-      <section style={{ padding: '5rem 1.5rem 4rem', maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', alignItems: 'center' }}>
-          <div>
-            <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '1.25rem' }}>
-              Personalized Qur'anic Education
-            </p>
-            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.1, fontWeight: 600, color: '#F5EDD8', marginBottom: '1.5rem' }}>
-              Lighting the path to <span style={{ color: '#D4A93A' }}>Qur'anic</span> excellence
-            </h1>
-            <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(245,237,216,0.7)', marginBottom: '2rem' }}>
-              One-on-one Qur'an memorization and Tajweed for children and adults worldwide — delivered live via WhatsApp and Zoom by certified teachers.
-            </p>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <a href="/booking" style={{ background: '#D4A93A', color: '#0F2318', padding: '14px 28px', borderRadius: '4px', fontWeight: 500, fontSize: '14px' }}>Book a Free Trial</a>
-              <a href="/programs" style={{ background: 'transparent', border: '0.5px solid rgba(245,237,216,0.35)', color: '#F5EDD8', padding: '14px 28px', borderRadius: '4px', fontSize: '14px' }}>Explore Programs</a>
+      <section style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: 'url(/teacher.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
+          zIndex: 0,
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to right, rgba(15,35,24,0.97) 45%, rgba(15,35,24,0.55) 100%)',
+          zIndex: 1,
+        }} />
+        <div style={{ position: 'relative', zIndex: 2, padding: '5rem 1.5rem 4rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', alignItems: 'center' }}>
+            <div>
+              <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '1.25rem' }}>
+                Personalized Qur'anic Education
+              </p>
+              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.1, fontWeight: 600, color: '#F5EDD8', marginBottom: '1.5rem' }}>
+                Lighting the path to <span style={{ color: '#D4A93A' }}>Qur'anic</span> excellence
+              </h1>
+              <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(245,237,216,0.7)', marginBottom: '2rem' }}>
+                One-on-one Qur'an memorization and Tajweed for children and adults worldwide — delivered live via WhatsApp and Zoom by certified teachers.
+              </p>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                <a href="/booking" style={{ background: '#D4A93A', color: '#0F2318', padding: '14px 28px', borderRadius: '4px', fontWeight: 500, fontSize: '14px' }}>Book a Free Trial</a>
+                <a href="/programs" style={{ background: 'transparent', border: '0.5px solid rgba(245,237,216,0.35)', color: '#F5EDD8', padding: '14px 28px', borderRadius: '4px', fontSize: '14px' }}>Explore Programs</a>
+              </div>
+              <div style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.4)' }}>or</span>
+                <a href="https://wa.me/233243083957?text=As-salamu alaykum! I'd like to book a free trial lesson." target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize: '13px', color: '#25D366', borderBottom: '0.5px solid rgba(37,211,102,0.3)', textDecoration: 'none' }}>
+                  message us on WhatsApp →
+                </a>
+              </div>
             </div>
-          </div>
 
-          {/* STATS CARD — updated */}
-          <div style={{ background: 'rgba(245,237,216,0.05)', border: '0.5px solid rgba(245,237,216,0.1)', borderRadius: '12px', padding: '2rem' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-              {[
-                { num: '45+', label: 'Students taught' },
-                { num: '🌍', label: 'International reach', isEmoji: true },
-              ].map((s) => (
-                <div key={s.label} style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: s.isEmoji ? '40px' : '36px', fontWeight: 600, color: '#D4A93A', lineHeight: 1 }}>{s.num}</div>
-                  <div style={{ fontSize: '12px', color: 'rgba(245,237,216,0.55)', marginTop: '4px' }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-            <div style={{ borderTop: '0.5px solid rgba(245,237,216,0.1)', paddingTop: '1.25rem', display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.45)' }}>Available on</span>
-              {[{ label: 'WhatsApp', color: '#25D366' }, { label: 'Zoom', color: '#2D8CFF' }].map((p) => (
-                <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(245,237,216,0.07)', border: '0.5px solid rgba(245,237,216,0.12)', borderRadius: '20px', padding: '6px 14px', fontSize: '12px', color: 'rgba(245,237,216,0.7)' }}>
-                  <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: p.color }}></div>
-                  {p.label}
-                </div>
-              ))}
+            <div style={{ background: 'rgba(245,237,216,0.05)', border: '0.5px solid rgba(245,237,216,0.1)', borderRadius: '12px', padding: '2rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                {[
+                  { num: '45+', label: 'Students taught' },
+                  { num: '🌍', label: 'International reach', isEmoji: true },
+                ].map((s) => (
+                  <div key={s.label} style={{ textAlign: 'center' }}>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: s.isEmoji ? '40px' : '36px', fontWeight: 600, color: '#D4A93A', lineHeight: 1 }}>{s.num}</div>
+                    <div style={{ fontSize: '12px', color: 'rgba(245,237,216,0.55)', marginTop: '4px' }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ borderTop: '0.5px solid rgba(245,237,216,0.1)', paddingTop: '1.25rem', display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '12px', color: 'rgba(245,237,216,0.45)' }}>Available on</span>
+                {[{ label: 'WhatsApp', color: '#25D366' }, { label: 'Zoom', color: '#2D8CFF' }].map((p) => (
+                  <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(245,237,216,0.07)', border: '0.5px solid rgba(245,237,216,0.12)', borderRadius: '20px', padding: '6px 14px', fontSize: '12px', color: 'rgba(245,237,216,0.7)' }}>
+                    <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: p.color }}></div>
+                    {p.label}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -109,7 +131,10 @@ export default async function Home() {
         <div style={{ flex: 1, height: '0.5px', background: '#F5EDD8' }}></div>
       </div>
 
-      {/* WHY CHOOSE US — new section to fill page */}
+      {/* QURAN SECTION */}
+      <QuranSection />
+
+      {/* WHY CHOOSE US */}
       <section style={{ padding: '4rem 1.5rem' }}>
         <div className="section-max">
           <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '0.75rem' }}>Why Online Quran Literacy</p>
@@ -135,7 +160,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* HOW IT WORKS — new section */}
+      {/* HOW IT WORKS */}
       <section style={{ padding: '4rem 1.5rem', background: 'rgba(212,169,58,0.04)', borderTop: '0.5px solid rgba(212,169,58,0.1)', borderBottom: '0.5px solid rgba(212,169,58,0.1)' }}>
         <div className="section-max">
           <p style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#D4A93A', marginBottom: '0.75rem' }}>Getting started</p>
@@ -190,11 +215,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ padding: '2rem 1.5rem', borderTop: '0.5px solid rgba(245,237,216,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '15px', color: '#D4A93A' }}>Online Quran Literacy</div>
-        <div style={{ fontSize: '12px', color: 'rgba(245,237,216,0.35)' }}>© 2026 Online Quran Literacy · Ghana</div>
-      </footer>
+      <Footer />
     </main>
   )
 }

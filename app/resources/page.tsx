@@ -3,6 +3,7 @@ import { client } from '../../sanity/lib/client'
 import { postsQuery } from '../../sanity/lib/queries'
 import NewsletterForm from '../components/NewsletterForm'
 import ResourcesClient from '../components/ResourcesClient'
+import Footer from '../components/Footer'
 
 export const metadata = {
   title: 'Resources',
